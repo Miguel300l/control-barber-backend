@@ -2,11 +2,6 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.js"
 import alumnoRoutes from "./routes/alumno.routes.js";
-import productoRoutes from "./routes/producto.routes.js";
-import compraRoutes from "./routes/compra.routes.js";
-import ventaRoutes from "./routes/venta.routes.js";
-import movimientoRoutes from "./routes/movimiento.routes.js";
-import reportes from "./routes/reportes.routes.js";
 import csrfRoutes from "./routes/csrf.routes.js";
 import cookieParser from "cookie-parser";
 import { createRoles } from "./config/initialRoles.js"
@@ -27,11 +22,6 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes)
 app.use("/api/alumnos", alumnoRoutes);
-app.use("/api/productos", productoRoutes);
-app.use("/api/compras", compraRoutes);
-app.use("/api/ventas", ventaRoutes);
-app.use("/api/movimientos", movimientoRoutes);
-app.use("/api/reportes", reportes);
 app.use("/api/csrf-token", csrfRoutes
 );
 
