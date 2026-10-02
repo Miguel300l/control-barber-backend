@@ -12,7 +12,7 @@ createRoles();
 
 app.use(cors({
     origin: [
-        "https://inventario-tienda.vercel.app",
+        "https://control-barber-style-git-main-proyecton.vercel.app",
         "http://localhost:5173"
     ],
     credentials: true
