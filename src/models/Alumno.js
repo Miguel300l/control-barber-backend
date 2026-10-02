@@ -23,7 +23,6 @@ const alumnoSchema = new Schema(
         documento: {
             type: String,
             required: true,
-            unique: true,
             trim: true
         },
 

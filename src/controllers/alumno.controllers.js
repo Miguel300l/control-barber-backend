@@ -30,7 +30,9 @@ export const obtenerAlumnoPorDocumento = async (req, res, next) => {
     try {
         const { documento } = req.params;
 
-        const alumno = await Alumno.findOne({ documento });
+        const alumno = await Alumno.findOne({ documento }).sort({
+            createdAt: -1,
+        });
 
         if (!alumno) {
             res.status(404);
