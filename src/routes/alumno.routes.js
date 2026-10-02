@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     obtenerAlumnos,
     obtenerAlumnoPorId,
+    obtenerAlumnoPorDocumento,
     crearAlumno,
     actualizarAlumno,
     eliminarAlumno
@@ -13,6 +14,8 @@ const router = Router();
 router.get("/", obtenerAlumnos);
 
 router.get("/:id", obtenerAlumnoPorId);
+
+router.get("/documento/:documento", obtenerAlumnoPorDocumento);
 
 router.post("/", csrfProtection, crearAlumno);
 

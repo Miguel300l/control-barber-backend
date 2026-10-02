@@ -26,6 +26,23 @@ export const obtenerAlumnoPorId = async (req, res, next) => {
     }
 };
 
+export const obtenerAlumnoPorDocumento = async (req, res, next) => {
+    try {
+        const { documento } = req.params;
+
+        const alumno = await Alumno.findOne({ documento });
+
+        if (!alumno) {
+            res.status(404);
+            throw new Error("Alumno no encontrado");
+        }
+
+        res.json(alumno);
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Crear un alumno
 export const crearAlumno = async (req, res, next) => {
     try {
