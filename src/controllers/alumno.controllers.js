@@ -57,15 +57,34 @@ export const crearAlumno = async (req, res, next) => {
             edad,
             totalCurso,
             abono,
-            fecha
+            fecha,
         } = req.body;
 
-        const saldoPendiente = Number(totalCurso) - Number(abono);
+        const total = Number(totalCurso);
+        const nuevoAbono = Number(abono);
+
+        if (total < 0 || nuevoAbono < 0) {
+            res.status(400);
+            throw new Error("Los valores no pueden ser negativos");
+        }
+
+        const ultimoAlumno = await Alumno.findOne({ documento }).sort({
+            createdAt: -1,
+        });
+
+        let saldoPendiente;
+
+        if (!ultimoAlumno) {
+            saldoPendiente = total - nuevoAbono;
+        } else {
+            saldoPendiente =
+                Number(ultimoAlumno.saldoPendiente) - nuevoAbono;
+        }
 
         if (saldoPendiente < 0) {
             res.status(400);
             throw new Error(
-                "El abono no puede ser mayor al valor total del curso"
+                `El abono no puede ser mayor al saldo pendiente. Saldo actual: ${ultimoAlumno?.saldoPendiente ?? total}`
             );
         }
 
@@ -76,10 +95,10 @@ export const crearAlumno = async (req, res, next) => {
             documento,
             celular,
             edad,
-            totalCurso,
-            abono,
+            totalCurso: total,
+            abono: nuevoAbono,
             saldoPendiente,
-            fecha
+            fecha,
         });
 
         res.status(201).json(alumno);
