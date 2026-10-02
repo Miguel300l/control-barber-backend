@@ -58,13 +58,6 @@ export const crearAlumno = async (req, res, next) => {
             fecha
         } = req.body;
 
-        const alumnoExistente = await Alumno.findOne({ documento });
-
-        if (alumnoExistente) {
-            res.status(400);
-            throw new Error("Ya existe un alumno con ese documento");
-        }
-
         const saldoPendiente = Number(totalCurso) - Number(abono);
 
         if (saldoPendiente < 0) {
