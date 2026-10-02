@@ -37,7 +37,8 @@ export const crearAlumno = async (req, res, next) => {
             celular,
             edad,
             totalCurso,
-            abono
+            abono,
+            fecha
         } = req.body;
 
         const alumnoExistente = await Alumno.findOne({ documento });
@@ -45,6 +46,15 @@ export const crearAlumno = async (req, res, next) => {
         if (alumnoExistente) {
             res.status(400);
             throw new Error("Ya existe un alumno con ese documento");
+        }
+
+        const saldoPendiente = Number(totalCurso) - Number(abono);
+
+        if (saldoPendiente < 0) {
+            res.status(400);
+            throw new Error(
+                "El abono no puede ser mayor al valor total del curso"
+            );
         }
 
         const alumno = await Alumno.create({
@@ -55,7 +65,9 @@ export const crearAlumno = async (req, res, next) => {
             celular,
             edad,
             totalCurso,
-            abono
+            abono,
+            saldoPendiente,
+            fecha
         });
 
         res.status(201).json(alumno);

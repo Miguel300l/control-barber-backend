@@ -49,7 +49,19 @@ const alumnoSchema = new Schema(
             type: Number,
             required: true,
             min: 0
-        }
+        },
+
+        fecha: {
+            type: Date,
+            required: true,
+            default: Date.now,
+        },
+
+        saldoPendiente: {
+            type: Number,
+            required: true,
+            min: 0
+        },
     },
     {
         timestamps: true,
